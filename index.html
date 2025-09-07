@@ -430,6 +430,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#5-paw-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. PAW Deployment
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -626,6 +635,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#5-paw-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. PAW Deployment
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -750,6 +768,50 @@
 <a href="https://learn.microsoft.com/en-us/windows/security/identity-protection/hello-for-business/hello-hybrid-aadj-sso">Configure single sign-on for Microsoft Entra joined devices</a></p>
 <p>It's also important to deploy the Nondestructive PIN reset service. This limits credential rotation needs and playing with AdminSDHolder as noted under msDS-KeyCredentialLink. Dos for deploying this service are found here, <a href="https://learn.microsoft.com/en-us/windows/security/identity-protection/hello-for-business/pin-reset?tabs=intune">PIN reset</a>.</p>
 <h4 id="msds-keycredentiallink">msDS-KeyCredentialLink<a class="headerlink" href="#msds-keycredentiallink" title="Permanent link">&para;</a></h4>
+<p>This is the attribute on user objects in Active Directory that holds the public key information for WHfB. While the key-pair is registered on the Windows client during setup, the public key is written back to the user object under the msDS-KeyCredentialLink attribute in Active Directory by Entra Connect.</p>
+<p>Entra Connect will fail writing data on privileged user objects protected by Active Directory, which are protected by adminSDHolder.</p>
+<p>Because the credentials rarely change, the ACL on the target privileged user(s) could be temporarily modified to allow the Entra Connect user to write to this attribute and then revert the change and/or allow the change to be reverted.</p>
+<p>In a production Active Directory there will be multiple Entra Connect users, one for the red tenant, one for prod, and possibly more for staging Entra Connect servers or stale users from prior Entra Connect installs. You can determine which one is used for the red tenant by opening the Entra Connect configuration wizard, select <strong>Configure</strong>, then select <strong>View or export current configuration</strong>. The user will be listed there as <strong>MSOL_<em>xxx</em></strong>.</p>
+<h3 id="5-paw-deployment">5. PAW Deployment<a class="headerlink" href="#5-paw-deployment" title="Permanent link">&para;</a></h3>
+<p>For testing purposes the PAW can either be a physical device or a virtual machine where you can access the console.</p>
+<p>Note that a virtual machine would not be considered acceptable from a clean source principal for a PAW in production.</p>
+<p>You need access to the console in order to authenticate to the PAW with Windows Hello for Business. Recall that PIN is an acceptable method for WHfB, you do not need to use biometrics.</p>
+<p>Any Hypervisor for the VM also needs to provide vTPM support, as a TPM is required for WHfB in Windows 11. There are ways around this if needed for lab purposes.</p>
+<p>If you want to test rolling out the Microsoft cloud managed PAW model you should read this documentation, <a href="https://learn.microsoft.com/en-us/security/privileged-access-workstations/privileged-access-deployment">Privileged access deployment</a>.</p>
+<p>If you want to just focus first on configuring WHfB, you need to make sure that the PAW is configured for <strong>Key trust</strong>. By default now Windows devices will attempt to enroll with <strong>Cloud Kerberos trust</strong>.</p>
+<p>To change this behavior do the following. Note that if you follow the Microsoft PAW deployment guidance this process should be incorporated into that and the group changed as needed.</p>
+<p>The following presumes that your PAW workstation name starts with <strong>paw</strong>.</p>
+<ol>
+<li>Sign in to the red tenant Entra admin center (entra.microsoft.com) with a privileged user with sufficient rights.</li>
+<li>In Entra, expand groups, select All groups, select <strong>New Group</strong>.</li>
+<li>Group type is <strong>Security</strong>. Group name should be <strong>Secure Workstation Devices.</strong></li>
+<li>Entra roles can be assigned to the group is <strong>No.</strong></li>
+<li>Membership type is <strong>Dynamic Device.</strong></li>
+<li>Membership rule should be <strong>displayName</strong> Starts With <strong>paw</strong>. Select <strong>Create</strong>.</li>
+<li>Browse to <a href="http://intune.microsoft.com">intune.microsoft.com</a> with a privileged user with sufficient rights.</li>
+<li>Select <strong>Devices</strong>. Expand <strong>Manage devices</strong>. Select <strong>Configuration</strong>.</li>
+<li>
+<p>Import the following policy:</p>
+<p><code>json
+{"@odata.context":"[https://graph.microsoft.com/beta/$metadata#deviceManagement/configurationPolicies/$entity","createdDateTime":"2025-02-21T17:53:59.2171583Z","creationSource":null,"description":"","lastModifiedDateTime":"2025-02-21T17:53:59.2171583Z","name":"Enable](https://graph.microsoft.com/beta/$metadata#deviceManagement/configurationPolicies/$entity%22,%22createdDateTime%22:%222025-02-21T17:53:59.2171583Z%22,%22creationSource%22:null,%22description%22:%22%22,%22lastModifiedDateTime%22:%222025-02-21T17:53:59.2171583Z%22,%22name%22:%22Enable) Windows Hello for Business PAW","platforms":"windows10","priorityMetaData":null,"roleScopeTagIds":["0"],"settingCount":4,"technologies":"mdm","id":"9a3ac0e0-999a-49ff-9c7f-70fd6c599215","templateReference":{"templateId":"","templateFamily":"none","templateDisplayName":null,"templateDisplayVersion":null},"settings":[{"id":"0","settingInstance":{"@odata.type":"#microsoft.graph.deviceManagementConfigurationChoiceSettingInstance","settingDefinitionId":"device_vendor_msft_policy_config_authentication_allowaadpasswordreset","settingInstanceTemplateReference":null,"choiceSettingValue":{"settingValueTemplateReference":null,"value":"device_vendor_msft_policy_config_authentication_allowaadpasswordreset_1","children":[]}}},{"id":"1","settingInstance":{"@odata.type":"#microsoft.graph.deviceManagementConfigurationChoiceSettingInstance","settingDefinitionId":"device_vendor_msft_passportforwork_biometrics_usebiometrics","settingInstanceTemplateReference":null,"choiceSettingValue":{"settingValueTemplateReference":null,"value":"device_vendor_msft_passportforwork_biometrics_usebiometrics_true","children":[]}}},{"id":"2","settingInstance":{"@odata.type":"#microsoft.graph.deviceManagementConfigurationGroupSettingCollectionInstance","settingDefinitionId":"device_vendor_msft_passportforwork_{tenantid}","settingInstanceTemplateReference":null,"groupSettingCollectionValue":[{"settingValueTemplateReference":null,"children":[{"@odata.type":"#microsoft.graph.deviceManagementConfigurationChoiceSettingInstance","settingDefinitionId":"device_vendor_msft_passportforwork_{tenantid}*policies_enablepinrecovery","settingInstanceTemplateReference":null,"choiceSettingValue":{"settingValueTemplateReference":null,"value":"device_vendor_msft_passportforwork*{tenantid}*policies_enablepinrecovery_true","children":[]}},{"@odata.type":"#microsoft.graph.deviceManagementConfigurationChoiceSettingInstance","settingDefinitionId":"device_vendor_msft_passportforwork*{tenantid}*policies_usecloudtrustforonpremauth","settingInstanceTemplateReference":null,"choiceSettingValue":{"settingValueTemplateReference":null,"value":"device_vendor_msft_passportforwork*{tenantid}*policies_usecloudtrustforonpremauth_false","children":[]}},{"@odata.type":"#microsoft.graph.deviceManagementConfigurationChoiceSettingInstance","settingDefinitionId":"device_vendor_msft_passportforwork*{tenantid}*policies_usepassportforwork","settingInstanceTemplateReference":null,"choiceSettingValue":{"settingValueTemplateReference":null,"value":"device_vendor_msft_passportforwork*{tenantid}*policies_usepassportforwork_true","children":[]}}]}]}},{"id":"3","settingInstance":{"@odata.type":"#microsoft.graph.deviceManagementConfigurationGroupSettingCollectionInstance","settingDefinitionId":"user_vendor_msft_passportforwork*{tenantid}","settingInstanceTemplateReference":null,"groupSettingCollectionValue":[{"settingValueTemplateReference":null,"children":[{"@odata.type":"#microsoft.graph.deviceManagementConfigurationChoiceSettingInstance","settingDefinitionId":"user_vendor_msft_passportforwork_{tenantid}*policies_requiresecuritydevice","settingInstanceTemplateReference":null,"choiceSettingValue":{"settingValueTemplateReference":null,"value":"user_vendor_msft_passportforwork*{tenantid}_policies_requiresecuritydevice_true","children":[]}}]}]}}]}</code>
+10. After importing, select to <strong>Edit</strong> the policy.
+11. Under <strong>Assignments</strong> ensure that the <strong>Included groups</strong> contains <strong>Secure Workstation Devices</strong>, with no filter set. If not, add this group.</p>
+</li>
+</ol>
+<p>Then for the PAW itself:</p>
+<ol>
+<li>Install Windows 11 on your select PAW</li>
+<li>During installation make sure to name the device starting with <strong>paw</strong>.</li>
+<li>During Windows 11 installation sign-in with a <strong>Work or School account</strong> and use a <strong>Domain Admin</strong> that is synchronized from AD.<ol>
+<li>You’ll be asked to sign-in with the password and might be prompted to setup MFA for the account.</li>
+</ol>
+</li>
+<li>After Windows is installed, sign in with your <strong>Domain Admin</strong></li>
+<li>You should be forced to configure Windows Hello for Business.<ol>
+<li>If you do not have biometrics, such as on a VM, you can simply create a PIN.</li>
+</ol>
+</li>
+</ol>
 
 
 
