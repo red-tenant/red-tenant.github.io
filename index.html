@@ -444,6 +444,39 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#post-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Post Deployment
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Post Deployment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#managing-ad" class="md-nav__link">
+    <span class="md-ellipsis">
+      Managing AD
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remote-desktop" class="md-nav__link">
+    <span class="md-ellipsis">
+      Remote Desktop
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -649,6 +682,39 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#post-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Post Deployment
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Post Deployment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#managing-ad" class="md-nav__link">
+    <span class="md-ellipsis">
+      Managing AD
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remote-desktop" class="md-nav__link">
+    <span class="md-ellipsis">
+      Remote Desktop
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -793,10 +859,12 @@
 <li>
 <p>Import the following policy:</p>
 <p><code>json
-{"@odata.context":"[https://graph.microsoft.com/beta/$metadata#deviceManagement/configurationPolicies/$entity","createdDateTime":"2025-02-21T17:53:59.2171583Z","creationSource":null,"description":"","lastModifiedDateTime":"2025-02-21T17:53:59.2171583Z","name":"Enable](https://graph.microsoft.com/beta/$metadata#deviceManagement/configurationPolicies/$entity%22,%22createdDateTime%22:%222025-02-21T17:53:59.2171583Z%22,%22creationSource%22:null,%22description%22:%22%22,%22lastModifiedDateTime%22:%222025-02-21T17:53:59.2171583Z%22,%22name%22:%22Enable) Windows Hello for Business PAW","platforms":"windows10","priorityMetaData":null,"roleScopeTagIds":["0"],"settingCount":4,"technologies":"mdm","id":"9a3ac0e0-999a-49ff-9c7f-70fd6c599215","templateReference":{"templateId":"","templateFamily":"none","templateDisplayName":null,"templateDisplayVersion":null},"settings":[{"id":"0","settingInstance":{"@odata.type":"#microsoft.graph.deviceManagementConfigurationChoiceSettingInstance","settingDefinitionId":"device_vendor_msft_policy_config_authentication_allowaadpasswordreset","settingInstanceTemplateReference":null,"choiceSettingValue":{"settingValueTemplateReference":null,"value":"device_vendor_msft_policy_config_authentication_allowaadpasswordreset_1","children":[]}}},{"id":"1","settingInstance":{"@odata.type":"#microsoft.graph.deviceManagementConfigurationChoiceSettingInstance","settingDefinitionId":"device_vendor_msft_passportforwork_biometrics_usebiometrics","settingInstanceTemplateReference":null,"choiceSettingValue":{"settingValueTemplateReference":null,"value":"device_vendor_msft_passportforwork_biometrics_usebiometrics_true","children":[]}}},{"id":"2","settingInstance":{"@odata.type":"#microsoft.graph.deviceManagementConfigurationGroupSettingCollectionInstance","settingDefinitionId":"device_vendor_msft_passportforwork_{tenantid}","settingInstanceTemplateReference":null,"groupSettingCollectionValue":[{"settingValueTemplateReference":null,"children":[{"@odata.type":"#microsoft.graph.deviceManagementConfigurationChoiceSettingInstance","settingDefinitionId":"device_vendor_msft_passportforwork_{tenantid}*policies_enablepinrecovery","settingInstanceTemplateReference":null,"choiceSettingValue":{"settingValueTemplateReference":null,"value":"device_vendor_msft_passportforwork*{tenantid}*policies_enablepinrecovery_true","children":[]}},{"@odata.type":"#microsoft.graph.deviceManagementConfigurationChoiceSettingInstance","settingDefinitionId":"device_vendor_msft_passportforwork*{tenantid}*policies_usecloudtrustforonpremauth","settingInstanceTemplateReference":null,"choiceSettingValue":{"settingValueTemplateReference":null,"value":"device_vendor_msft_passportforwork*{tenantid}*policies_usecloudtrustforonpremauth_false","children":[]}},{"@odata.type":"#microsoft.graph.deviceManagementConfigurationChoiceSettingInstance","settingDefinitionId":"device_vendor_msft_passportforwork*{tenantid}*policies_usepassportforwork","settingInstanceTemplateReference":null,"choiceSettingValue":{"settingValueTemplateReference":null,"value":"device_vendor_msft_passportforwork*{tenantid}*policies_usepassportforwork_true","children":[]}}]}]}},{"id":"3","settingInstance":{"@odata.type":"#microsoft.graph.deviceManagementConfigurationGroupSettingCollectionInstance","settingDefinitionId":"user_vendor_msft_passportforwork*{tenantid}","settingInstanceTemplateReference":null,"groupSettingCollectionValue":[{"settingValueTemplateReference":null,"children":[{"@odata.type":"#microsoft.graph.deviceManagementConfigurationChoiceSettingInstance","settingDefinitionId":"user_vendor_msft_passportforwork_{tenantid}*policies_requiresecuritydevice","settingInstanceTemplateReference":null,"choiceSettingValue":{"settingValueTemplateReference":null,"value":"user_vendor_msft_passportforwork*{tenantid}_policies_requiresecuritydevice_true","children":[]}}]}]}}]}</code>
-10. After importing, select to <strong>Edit</strong> the policy.
-11. Under <strong>Assignments</strong> ensure that the <strong>Included groups</strong> contains <strong>Secure Workstation Devices</strong>, with no filter set. If not, add this group.</p>
+{"@odata.context":"[https://graph.microsoft.com/beta/$metadata#deviceManagement/configurationPolicies/$entity","createdDateTime":"2025-02-21T17:53:59.2171583Z","creationSource":null,"description":"","lastModifiedDateTime":"2025-02-21T17:53:59.2171583Z","name":"Enable](https://graph.microsoft.com/beta/$metadata#deviceManagement/configurationPolicies/$entity%22,%22createdDateTime%22:%222025-02-21T17:53:59.2171583Z%22,%22creationSource%22:null,%22description%22:%22%22,%22lastModifiedDateTime%22:%222025-02-21T17:53:59.2171583Z%22,%22name%22:%22Enable) Windows Hello for Business PAW","platforms":"windows10","priorityMetaData":null,"roleScopeTagIds":["0"],"settingCount":4,"technologies":"mdm","id":"9a3ac0e0-999a-49ff-9c7f-70fd6c599215","templateReference":{"templateId":"","templateFamily":"none","templateDisplayName":null,"templateDisplayVersion":null},"settings":[{"id":"0","settingInstance":{"@odata.type":"#microsoft.graph.deviceManagementConfigurationChoiceSettingInstance","settingDefinitionId":"device_vendor_msft_policy_config_authentication_allowaadpasswordreset","settingInstanceTemplateReference":null,"choiceSettingValue":{"settingValueTemplateReference":null,"value":"device_vendor_msft_policy_config_authentication_allowaadpasswordreset_1","children":[]}}},{"id":"1","settingInstance":{"@odata.type":"#microsoft.graph.deviceManagementConfigurationChoiceSettingInstance","settingDefinitionId":"device_vendor_msft_passportforwork_biometrics_usebiometrics","settingInstanceTemplateReference":null,"choiceSettingValue":{"settingValueTemplateReference":null,"value":"device_vendor_msft_passportforwork_biometrics_usebiometrics_true","children":[]}}},{"id":"2","settingInstance":{"@odata.type":"#microsoft.graph.deviceManagementConfigurationGroupSettingCollectionInstance","settingDefinitionId":"device_vendor_msft_passportforwork_{tenantid}","settingInstanceTemplateReference":null,"groupSettingCollectionValue":[{"settingValueTemplateReference":null,"children":[{"@odata.type":"#microsoft.graph.deviceManagementConfigurationChoiceSettingInstance","settingDefinitionId":"device_vendor_msft_passportforwork_{tenantid}*policies_enablepinrecovery","settingInstanceTemplateReference":null,"choiceSettingValue":{"settingValueTemplateReference":null,"value":"device_vendor_msft_passportforwork*{tenantid}*policies_enablepinrecovery_true","children":[]}},{"@odata.type":"#microsoft.graph.deviceManagementConfigurationChoiceSettingInstance","settingDefinitionId":"device_vendor_msft_passportforwork*{tenantid}*policies_usecloudtrustforonpremauth","settingInstanceTemplateReference":null,"choiceSettingValue":{"settingValueTemplateReference":null,"value":"device_vendor_msft_passportforwork*{tenantid}*policies_usecloudtrustforonpremauth_false","children":[]}},{"@odata.type":"#microsoft.graph.deviceManagementConfigurationChoiceSettingInstance","settingDefinitionId":"device_vendor_msft_passportforwork*{tenantid}*policies_usepassportforwork","settingInstanceTemplateReference":null,"choiceSettingValue":{"settingValueTemplateReference":null,"value":"device_vendor_msft_passportforwork*{tenantid}*policies_usepassportforwork_true","children":[]}}]}]}},{"id":"3","settingInstance":{"@odata.type":"#microsoft.graph.deviceManagementConfigurationGroupSettingCollectionInstance","settingDefinitionId":"user_vendor_msft_passportforwork*{tenantid}","settingInstanceTemplateReference":null,"groupSettingCollectionValue":[{"settingValueTemplateReference":null,"children":[{"@odata.type":"#microsoft.graph.deviceManagementConfigurationChoiceSettingInstance","settingDefinitionId":"user_vendor_msft_passportforwork_{tenantid}*policies_requiresecuritydevice","settingInstanceTemplateReference":null,"choiceSettingValue":{"settingValueTemplateReference":null,"value":"user_vendor_msft_passportforwork*{tenantid}_policies_requiresecuritydevice_true","children":[]}}]}]}}]}</code></p>
 </li>
+<li>
+<p>After importing, select to <strong>Edit</strong> the policy.</p>
+</li>
+<li>Under <strong>Assignments</strong> ensure that the <strong>Included groups</strong> contains <strong>Secure Workstation Devices</strong>, with no filter set. If not, add this group.</li>
 </ol>
 <p>Then for the PAW itself:</p>
 <ol>
@@ -812,6 +880,18 @@
 </ol>
 </li>
 </ol>
+<h2 id="post-deployment">Post Deployment<a class="headerlink" href="#post-deployment" title="Permanent link">&para;</a></h2>
+<p>Once you've deployed the above, you should have a working PAW for your Domain Administrator, that is Entra-joined, and using Windows Hello for Business.</p>
+<h3 id="managing-ad">Managing AD<a class="headerlink" href="#managing-ad" title="Permanent link">&para;</a></h3>
+<p>On your PAW, you can add all the typical tools Active Directory management tools, ADUC, GPMC, etc.</p>
+<p>You will need to specify the domain/domain controller you want to connect to in tools like ADUC. When you first open the MMC tools they will throw an error that the domain is not located.</p>
+<p>For AD PowerShell cmdlets, you don't need to specify credentials, but you will need to specify a domain controller with the -Server flag</p>
+<h3 id="remote-desktop">Remote Desktop<a class="headerlink" href="#remote-desktop" title="Permanent link">&para;</a></h3>
+<p>When remoting to other Tier 0 resources, you can use Remote Credential Guard to for RDP. Not only are there security positives to remote credential guard, but this minimizes complexity that would come with Windows Hello for Business with RDP</p>
+<p><a href="https://learn.microsoft.com/en-us/windows/security/identity-protection/remote-credential-guard?tabs=intune#configure-delegation-of-credentials-on-the-clients">Remote Credential Guard | Microsoft Learn</a></p>
+<p>To use, run</p>
+<p>mstsc.exe /remoteGuard</p>
+<p>This can also be set as a policy on the PAW to force, however, it would prevent your ability to use an alternate set of credentials with RDP.</p>
 
 
 
